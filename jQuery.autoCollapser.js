@@ -14,96 +14,84 @@
 
   var methods = {
     init: function(options) {
+      var settings = $.extend(default_settings, options);
+      var data = {
+        settings: settings,
+        box: this.find(settings.box),
+        toggle: this.find(settings.toggle),
+        wrapper: this
+      };
 
-      return this.each(function(){
-        var $this = $(this);
-        var settings = $.extend(default_settings, options);
-        var data = {
-          settings: settings,
-          box: $(settings.box, this),
-          toggle: $(settings.toggle, this),
-          wrapper: $this
-        };
-
-        $this.data(plugin.name, data);
-        methods.bind.call($this);
-      });
+      this.data(plugin.name, data);
+      methods.bind.call(this);
     },
     
     bind: function() {
       // In case init is called multiple times
       methods.unbind.call(this);
 
-      return this.each(function(){
-        var data = $(this).data(plugin.name);
-        data.wrapper.addClass(data.settings.expandedClass);
-        data.toggle.bind('click', methods.click);
-        data.toggle.data(plugin.name, {wrapper: data.wrapper});
-      });
+      var data = this.data(plugin.name);
+      data.wrapper.addClass(data.settings.expandedClass);
+      data.toggle.bind('click', methods.click);
+      data.toggle.data(plugin.name, {wrapper: data.wrapper});
     },
 
     unbind: function() {
-      return this.each(function(){
-        var data = $(this).data(plugin.name);
-        data.wrapper.removeClass(data.settings.collapsedClass);
-        data.wrapper.removeClass(data.settings.expandedClass);
-        data.toggle.unbind('click', methods.click);
-      });
+      var data = this.data(plugin.name);
+      data.wrapper.removeClass(data.settings.collapsedClass);
+      data.wrapper.removeClass(data.settings.expandedClass);
+      data.toggle.unbind('click', methods.click);
     },
 
     destroy: function() {
       methods.unbind.call(this);
-
-      return this.each(function(){
-        $(this).removeData(plugin.name);
-      });
+      this.removeData(plugin.name);
     },
 
     show: function() {
-      return this.each(function(){
-        var data = $(this).data(plugin.name);
-        if (data.settings.stop) {
-          data.box.stop(true, true);
-        }
-        data.box.slideDown(data.duration);
-        data.wrapper.removeClass(data.settings.collapsedClass);
-        data.wrapper.addClass(data.settings.expandedClass);
-      });
+      var data = this.data(plugin.name);
+      if (data.settings.stop) {
+        data.box.stop(true, true);
+      }
+      data.box.slideDown(data.duration);
+      data.wrapper.removeClass(data.settings.collapsedClass);
+      data.wrapper.addClass(data.settings.expandedClass);
     },
 
     hide: function() {
-      return this.each(function(){
-        var data = $(this).data(plugin.name);
-        if (data.settings.stop) {
-          data.box.stop(true, true);
-        }
-        data.box.slideUp(data.duration);
-        data.wrapper.removeClass(data.settings.expandedClass);
-        data.wrapper.addClass(data.settings.collapsedClass);
-      });
+      var data = this.data(plugin.name);
+      if (data.settings.stop) {
+        data.box.stop(true, true);
+      }
+      data.box.slideUp(data.duration);
+      data.wrapper.removeClass(data.settings.expandedClass);
+      data.wrapper.addClass(data.settings.collapsedClass);
     },
 
     click: function(e) {
       if (e) {e.preventDefault();}
       var wrapper = $(this).data(plugin.name).wrapper;
-      return methods.toggle.call(wrapper);
+      methods.toggle.call(wrapper);
     },
 
     toggle: function() {
-      return this.each(function(){
-        var data = $(this).data(plugin.name);
-        var method = data.wrapper.hasClass(data.settings.expandedClass) ? "hide" : "show";
-        methods[method].call($(this));
-      });
+      var data = this.data(plugin.name);
+      var method = data.wrapper.hasClass(data.settings.expandedClass) ? "hide" : "show";
+      methods[method].call(this);
     }
   };
 
   $.fn[plugin.name] = function(method) {
 
     if ( typeof method === 'object' || ! method ) {
+      // Constructor
       return methods.init.apply( this, arguments );
     } else if ( methods[method] ) {
-      return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      // Method, shift method name and call on each
+      var args = Array.prototype.slice.call(arguments, 1);
+      return this.each(function(){
+        methods[method].apply($(this), args);
+      });
     } else {
       $.error( 'Method ' +  method + ' does not exist on jQuery.' + plugin.name );
     }
