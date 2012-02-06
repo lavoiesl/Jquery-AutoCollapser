@@ -49,8 +49,9 @@
 
     unbind: function() {
       var data = this.data(plugin.name);
-      data.wrapper.removeClass(data.settings.collapsedClass);
-      data.wrapper.removeClass(data.settings.expandedClass);
+      var settings = data.settings;
+      
+      data.wrapper.removeClass(settings.collapsedClass + ' ' + settings.expandedClass);
       data.toggle.unbind('click', methods.click);
     },
 
