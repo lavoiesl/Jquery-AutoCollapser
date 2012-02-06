@@ -31,7 +31,7 @@
     },
     
     bind: function() {
-      // In case init is call two times
+      // In case init is called multiple times
       methods.unbind.call(this);
 
       return this.each(function(){
