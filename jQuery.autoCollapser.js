@@ -25,22 +25,38 @@
         };
 
         $this.data(plugin.name, data);
-        data.wrapper.addClass(settings.expandedClass);
-        data.toggle.click(function(e){
-          e.preventDefault();
-          methods.toggle.call($this);
-        });
+        methods.bind.call($this);
       });
     },
     
-    /* TODO
-    destroy: function() {
+    bind: function() {
+      // In case init is call two times
+      methods.unbind.call(this);
+
       return this.each(function(){
-        var $this = $(this);
-        $this.removeData(plugin.name);
+        var data = $(this).data(plugin.name);
+        data.wrapper.addClass(data.settings.expandedClass);
+        data.toggle.bind('click', methods.click);
+        data.toggle.data(plugin.name, {wrapper: data.wrapper});
       });
     },
-    */
+
+    unbind: function() {
+      return this.each(function(){
+        var data = $(this).data(plugin.name);
+        data.wrapper.removeClass(data.settings.collapsedClass);
+        data.wrapper.removeClass(data.settings.expandedClass);
+        data.toggle.unbind('click', methods.click);
+      });
+    },
+
+    destroy: function() {
+      methods.unbind.call(this);
+
+      return this.each(function(){
+        $(this).removeData(plugin.name);
+      });
+    },
 
     show: function() {
       return this.each(function(){
@@ -58,6 +74,12 @@
         data.wrapper.removeClass(data.settings.expandedClass);
         data.wrapper.addClass(data.settings.collapsedClass);
       });
+    },
+
+    click: function(e) {
+      if (e) {e.preventDefault();}
+      var wrapper = $(this).data(plugin.name).wrapper;
+      return methods.toggle.call(wrapper);
     },
 
     toggle: function() {
