@@ -47,7 +47,8 @@ $(function() {
     toggle: '.collapse-toggle',           // The trigger, binding will be added onClick
     collapsedClass: 'collapse-collapsed', // Class to be added to the wrapper when it is collapsed
     expandedClass: 'collapse-expanded',   // Idem
-    duration: 800                         // Speed in ms for the animation
+    duration: 800,                        // Speed in ms for the animation,
+    stop: true                            // Empty the queue using .stop(true, true)
 }
 ```
 

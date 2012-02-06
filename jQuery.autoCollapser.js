@@ -8,7 +8,8 @@
     toggle: '.collapse-toggle',           // The trigger, binding will be added onClick
     collapsedClass: 'collapse-collapsed', // Class to be added to the wrapper when it is collapsed
     expandedClass: 'collapse-expanded',   // Idem
-    duration: 800                         // Speed in ms for the animation
+    duration: 800,                        // Speed in ms for the animation,
+    stop: true                            // Empty the queue using .stop(true, true)
   };
 
   var methods = {
@@ -61,6 +62,9 @@
     show: function() {
       return this.each(function(){
         var data = $(this).data(plugin.name);
+        if (data.settings.stop) {
+          data.box.stop(true, true);
+        }
         data.box.slideDown(data.duration);
         data.wrapper.removeClass(data.settings.collapsedClass);
         data.wrapper.addClass(data.settings.expandedClass);
@@ -70,6 +74,9 @@
     hide: function() {
       return this.each(function(){
         var data = $(this).data(plugin.name);
+        if (data.settings.stop) {
+          data.box.stop(true, true);
+        }
         data.box.slideUp(data.duration);
         data.wrapper.removeClass(data.settings.expandedClass);
         data.wrapper.addClass(data.settings.collapsedClass);
