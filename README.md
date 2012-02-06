@@ -40,6 +40,17 @@ $(function() {
 });
 ```
 
+### Options
+```javascript
+{
+    box: '.collapse-box',                 // The box that will be collasped
+    toggle: '.collapse-toggle',           // The trigger, binding will be added onClick
+    collapsedClass: 'collapse-collapsed', // Class to be added to the wrapper when it is collapsed
+    expandedClass: 'collapse-expanded',   // Idem
+    duration: 800                         // Speed in ms for the animation
+}
+```
+
 ## CSS Example
 ```css
 .collapse-wrapper {
