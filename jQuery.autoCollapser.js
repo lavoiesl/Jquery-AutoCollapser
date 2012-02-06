@@ -12,6 +12,17 @@
     stop: true                            // Empty the queue using .stop(true, true)
   };
 
+  // Utility function to hide/show
+  function animation(func, removeClass, addClass) {
+    var data = this.data(plugin.name);
+    if (data.settings.stop) {
+      data.box.stop(true, true);
+    }
+    data.box[func](data.duration);
+    data.wrapper.removeClass(data.settings[removeClass]);
+    data.wrapper.addClass(data.settings[addClass]);
+  }
+
   var methods = {
     init: function(options) {
       var settings = $.extend(default_settings, options);
@@ -49,23 +60,11 @@
     },
 
     show: function() {
-      var data = this.data(plugin.name);
-      if (data.settings.stop) {
-        data.box.stop(true, true);
-      }
-      data.box.slideDown(data.duration);
-      data.wrapper.removeClass(data.settings.collapsedClass);
-      data.wrapper.addClass(data.settings.expandedClass);
+      animation.call(this, 'slideDown', 'collapsedClass', 'expandedClass');
     },
 
     hide: function() {
-      var data = this.data(plugin.name);
-      if (data.settings.stop) {
-        data.box.stop(true, true);
-      }
-      data.box.slideUp(data.duration);
-      data.wrapper.removeClass(data.settings.expandedClass);
-      data.wrapper.addClass(data.settings.collapsedClass);
+      animation.call(this, 'slideUp', 'expandedClass', 'collapsedClass');
     },
 
     click: function(e) {
