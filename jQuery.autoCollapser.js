@@ -62,8 +62,9 @@
 
       var data = this.data(plugin.name);
       data.wrapper.addClass(data.settings.expandedClass);
-      data.toggle.bind('click', methods.click);
-      data.toggle.data(plugin.name, {wrapper: data.wrapper});
+      data.toggle
+        .bind('click', methods.click)
+        .data(plugin.name, {wrapper: data.wrapper});
     },
 
     unbind: function() {
