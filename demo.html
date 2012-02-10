@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery AutoCollapser Demo</title>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="jQuery.autoCollapser.js"></script>
+
+  <style>
+    .collapse-wrapper {
+        border: 1px solid green;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .collapse-expanded .collapse-toggle::after {
+        content: " -"
+    }
+    .collapse-collapsed .collapse-toggle::after {
+        content: " +"
+    }
+
+    .collapse-box {
+        border: 1px solid red;
+        margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>jQuery AutoCollapser Demo</h1>
+  <div class="collapse-wrapper">
+    <div class="header">
+      <a href="#" class="collapse-toggle">Toggle</a>
+    </div>
+    <div class="collapse-box">
+      <ul>
+          <li>Test</li>
+          <li>Test</li>
+          <li>Test</li>
+          <li>Test</li>
+      </ul>
+    </div>
+  </div>
+  <div class="collapse-wrapper">
+    <div class="header">
+      <a href="#" class="collapse-toggle">Toggle</a>
+    </div>
+    <div class="collapse-box">
+      <ul>
+          <li>Test</li>
+          <li>Test</li>
+          <li>Test</li>
+          <li>Test</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    $('.collapse-wrapper')
+      .autoCollapser()
+      .on('autoCollapser.toggle.start', function(event,data){
+        console.log("Collapser has started " + (data.show ? 'expanding' : 'collasping'));
+      })
+      .on('autoCollapser.toggle.after', function(event,data){
+        console.log("Collapser was successfully " + (data.show ? 'expanded' : 'collasped'));
+      });
+  </script>
+</body>
+</html>
