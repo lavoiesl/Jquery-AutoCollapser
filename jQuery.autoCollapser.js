@@ -15,12 +15,16 @@
   // Utility function to hide/show
   function animation(func, removeClass, addClass) {
     var data = this.data(plugin.name);
+    // Nothing to do
+    if (data.box.is('.'+addClass)) return;
+
     if (data.settings.stop) {
-      data.box.stop(true, true);
+      data.box.stop(true);
     }
-    data.box[func](data.duration);
+
     data.wrapper.removeClass(data.settings[removeClass]);
     data.wrapper.addClass(data.settings[addClass]);
+    data.box.slideToggle(data.duration);
   }
 
   var methods = {
@@ -61,11 +65,11 @@
     },
 
     show: function() {
-      animation.call(this, 'slideDown', 'collapsedClass', 'expandedClass');
+      animation.call(this, 'collapsedClass', 'expandedClass');
     },
 
     hide: function() {
-      animation.call(this, 'slideUp', 'expandedClass', 'collapsedClass');
+      animation.call(this, 'expandedClass', 'collapsedClass');
     },
 
     click: function(e) {
