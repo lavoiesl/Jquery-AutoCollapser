@@ -98,4 +98,4 @@ $('.collapse-wrapper').on('autoCollapser.toggle.after', function(event,data){
 
 ## Demo
 
-Checkout the demo on [JSFiddle](http://jsfiddle.net/PLVYg/)
+Checkout the [demo](http://lavoiesl.github.com/Jquery-AutoCollapser/demo.html)
