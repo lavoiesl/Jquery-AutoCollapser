@@ -83,12 +83,16 @@
 
   $.fn[plugin.name] = function(method) {
 
+    var args = false;
     if ( typeof method === 'object' || ! method ) {
       // Constructor
-      return methods.init.apply( this, arguments );
+      args = [method];
+      method = 'init';
     } else if ( methods[method] ) {
       // Method, shift method name and call on each
-      var args = Array.prototype.slice.call(arguments, 1);
+      args = Array.prototype.slice.call(arguments, 1);
+    }
+    if (args) {
       return this.each(function(){
         methods[method].apply($(this), args);
       });
