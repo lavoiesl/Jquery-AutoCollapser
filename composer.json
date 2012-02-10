@@ -1,0 +1,13 @@
+{
+    "name": "lavoiesl/Jquery-AutoCollapser",
+    "type": "jquery-plugin",
+    "description": "Small jQuery plugin that collapses a box on a toggle",
+    "keywords": ["jQuery"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sébastien Lavoie",
+            "email": "github@lavoie.sl"
+        }
+    ]
+}
