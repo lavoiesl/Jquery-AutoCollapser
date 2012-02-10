@@ -13,18 +13,23 @@
   };
 
   // Utility function to hide/show
-  function animation(func, removeClass, addClass) {
+  function animation(show) {
     var data = this.data(plugin.name);
+    var settings = data.settings;
+    var box = data.box;
+    
     // Nothing to do
-    if (data.box.is('.'+addClass)) return;
+    var should_have_class = show ? 'expandedClass' : 'collapsedClass';
+    if (box.is('.'+settings[should_have_class])) return;
 
-    if (data.settings.stop) {
-      data.box.stop(true);
+    if (settings.stop) {
+      box.stop(true);
     }
 
-    data.wrapper.removeClass(data.settings[removeClass]);
-    data.wrapper.addClass(data.settings[addClass]);
-    data.box.slideToggle(data.duration);
+    data.wrapper
+      .toggleClass(settings.expandedClass, show)
+      .toggleClass(settings.collapsedClass, !show);
+    box.slideToggle(data.duration);
   }
 
   var methods = {
@@ -65,11 +70,11 @@
     },
 
     show: function() {
-      animation.call(this, 'collapsedClass', 'expandedClass');
+      animation.call(this, true);
     },
 
     hide: function() {
-      animation.call(this, 'expandedClass', 'collapsedClass');
+      animation.call(this, false);
     },
 
     click: function(e) {
@@ -80,8 +85,8 @@
 
     toggle: function() {
       var data = this.data(plugin.name);
-      var method = data.wrapper.hasClass(data.settings.expandedClass) ? "hide" : "show";
-      methods[method].call(this);
+      var show = !data.wrapper.hasClass(data.settings.expandedClass);
+      animation.call(this, show);
     }
   };
 
