@@ -29,7 +29,7 @@
     data.wrapper
       .toggleClass(settings.expandedClass, show)
       .toggleClass(settings.collapsedClass, !show);
-    box.slideToggle(data.duration);
+    box.slideToggle(settings.duration);
   }
 
   var methods = {
