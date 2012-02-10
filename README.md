@@ -52,22 +52,6 @@ $(function() {
 }
 ```
 
-### Events
-Two events are made and they both pass the data.show as a boolean
-
-  * autoCollapser.toggle.start
-  * autoCollapser.toggle.after
-
-```javascript
-$('.collapse-wrapper').on('autoCollapser.toggle.start', function(event,data){
-  console.log("Collapser has started " + (data.show ? 'expanding' : 'collasping'));
-});
-$('.collapse-wrapper').on('autoCollapser.toggle.after', function(event,data){
-  console.log("Collapser was " + (data.show ? 'expanded' : 'collasped'));
-});
-```
-
-
 ## CSS Example
 ```css
 .collapse-wrapper {
@@ -96,6 +80,21 @@ $('.collapse-wrapper').autoCollapser('hide');
 $('.collapse-wrapper').autoCollapser('toggle');
 ````
 
+
+### Events
+Two events are made and they both pass the data.show as a boolean
+
+  * autoCollapser.toggle.start
+  * autoCollapser.toggle.after
+
+```javascript
+$('.collapse-wrapper').on('autoCollapser.toggle.start', function(event,data){
+  console.log("Collapser has started " + (data.show ? 'expanding' : 'collasping'));
+});
+$('.collapse-wrapper').on('autoCollapser.toggle.after', function(event,data){
+  console.log("Collapser was " + (data.show ? 'expanded' : 'collasped'));
+});
+```
 
 ## Demo
 
