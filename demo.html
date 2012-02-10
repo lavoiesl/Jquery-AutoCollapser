@@ -56,7 +56,14 @@
     </div>
   </div>
   <script>
-    $('.collapse-wrapper').autoCollapser();
+    $('.collapse-wrapper')
+      .autoCollapser()
+      .on('autoCollapser.toggle.start', function(event,data){
+        console.log("Collapser has started " + (data.show ? 'expanding' : 'collasping'));
+      })
+      .on('autoCollapser.toggle.after', function(event,data){
+        console.log("Collapser was successfully " + (data.show ? 'expanded' : 'collasped'));
+      });
   </script>
 </body>
 </html>

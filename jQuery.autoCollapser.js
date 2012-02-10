@@ -9,7 +9,8 @@
     collapsedClass: 'collapse-collapsed', // Class to be added to the wrapper when it is collapsed
     expandedClass: 'collapse-expanded',   // Idem
     duration: 800,                        // Speed in ms for the animation,
-    stop: true                            // Empty the queue using .stop(true, true)
+    stop: true,                           // Empty the queue using .stop(true, true)
+    easing: "swing"                       // Swing is the default easing
   };
 
   // Utility function to hide/show
@@ -26,10 +27,19 @@
       box.stop(true);
     }
 
+    trigger_event(data.wrapper, 'toggle.start', {show: show});
+
     data.wrapper
       .toggleClass(settings.expandedClass, show)
       .toggleClass(settings.collapsedClass, !show);
-    box.slideToggle(settings.duration);
+
+    box.slideToggle(settings.duration, settings.easing, function(){
+      trigger_event(data.wrapper, 'toggle.after', {show: show});
+    });
+  }
+
+  function trigger_event(wrapper, event, options) {
+    wrapper.trigger(plugin.name + '.' + event, options);
   }
 
   var methods = {
@@ -45,7 +55,7 @@
       this.data(plugin.name, data);
       methods.bind.call(this);
     },
-    
+
     bind: function() {
       // In case init is called multiple times
       methods.unbind.call(this);
@@ -67,6 +77,7 @@
     destroy: function() {
       methods.unbind.call(this);
       this.removeData(plugin.name);
+      this.off(plugin.name);
     },
 
     show: function() {
