@@ -89,20 +89,18 @@
 
     var args = false;
     if ( typeof method === 'object' || ! method ) {
-      // Constructor
+      // Constructor, method will hold its options
       args = [method];
       method = 'init';
     } else if ( methods[method] ) {
-      // Method, shift method name and call on each
+      // Method, shift method name to get its arguments
       args = Array.prototype.slice.call(arguments, 1);
-    }
-    if (args) {
-      return this.each(function(){
-        methods[method].apply($(this), args);
-      });
     } else {
       $.error( 'Method ' +  method + ' does not exist on jQuery.' + plugin.name );
+      return this;
     }
-
+    return this.each(function(){
+      methods[method].apply($(this), args);
+    });
   };
-})( jQuery );
+})(jQuery);
